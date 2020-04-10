@@ -1,11 +1,13 @@
-const express = require('express');
+const http = require('http');
 const dataRequest = require('./src/dataRequest');
 const affinater = require('./src/affinateResults')
-var EventEmitter = require('events').EventEmitter;
-var results = [];
-var attempt = 1;
+const express = require('express');
 
 var app = express();
+var EventEmitter = require('events').EventEmitter;
+var results = [];
+
+
 
 var em = new EventEmitter();
 
@@ -25,6 +27,7 @@ em.on('scraped', function(result) {
         throw result
     });
 });
+var attempt = 1;
 em.on('scrapeFailUrl', function(result) {
     console.log(result + "'s Data is not yet available")
     var d = new Date();
@@ -40,14 +43,17 @@ em.on('scrapeFailFile', function(result){
     throw result
 });
 
-
 ////////////////////////////////////////////////////////////////////////////////
-// Routes
+// Routes                                                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
-app.get('/', function(req, res) {
-  res.render('test.ejs', {resu: results});
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  next();
 });
+
 
 app.get('/data/countries', function(req, res) {
     if (results.Country) res.json({status : 200, data : results.Country});
@@ -57,6 +63,7 @@ app.get('/data/countries', function(req, res) {
 app.get('/data/countries/:country', function(req, res) {
     if (req.params.country) {
         country = req.params.country[0].toUpperCase() + req.params.country.slice(1).toLowerCase();
+        if (country == "Us") country = "US";
         if (results.Country[country]) res.json({status : 200, data : results.Country[country]});
         else res.json({status : 400, data : []})
     } else res.json({status : 400, data : []})
@@ -88,4 +95,40 @@ app.get('/data/cities/:city', function(req, res) {
     } else res.json({status : 400, data : []})
 });
 
-app.listen(8080);
+app.set('port', 8080);
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Server                                                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+const errorHandler = error => {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges.');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use.');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+};
+
+const server = http.createServer(app);
+
+server.on('error', errorHandler);
+server.on('listening', () => {
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + '8080';
+  console.log('Listening on ' + bind);
+});
+
+server.listen(8080);

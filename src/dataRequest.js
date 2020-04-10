@@ -84,7 +84,7 @@ exports.scrapDataHistory = function(em, res)  {
     const country = {};
     const zone = {};
 
-    fs.writeFile('History.csv', '', function() {});
+    fs.writeFile('./data/' + 'History.csv', '', function() {});
     process.stdout.write("Begining of the Request to " + base_url);
 
     //Begining of the request
