@@ -19,7 +19,7 @@ import APIData from './Services/GetData'
 export default {
   name: 'App',
   data: () => ({
-    test : ''
+    varAllData : []
   }),
   components: {
     //HelloWorld,
@@ -31,8 +31,9 @@ export default {
     async getAllData () {
       try {
         const res = await APIData.allData();
-        this.test = res.data.email;
-        console.log(res)
+        this.varAllData = res.data.data;
+        console.log("all data : ")
+        console.log(this.varAllData)
       } catch (err) {
         console.log('Error get all data', Object.values(err))
       }
@@ -46,8 +47,9 @@ export default {
     }
   },
 
-  beforeCreate() {
-    //this.getAllData()
+
+  created() {
+    this.getAllData()
   }
 }
 </script>
