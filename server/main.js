@@ -72,7 +72,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/data', function(req, res) {
+app.get('/data/all', function(req, res) {
     if (results) res.status(200).json({status : 200, data : {countries : results.Country, zones : results.Zone, cities : results.City}});
     else res.status(400).json({status : 400, data : []})
 });
