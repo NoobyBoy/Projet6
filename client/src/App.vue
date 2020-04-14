@@ -11,14 +11,30 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import TotalCase from './components/TotalCase.vue'
-import CaseList from './components/CaseList.vue'
+import APIData from 'Services/GetData'
 
 export default {
   name: 'App',
+  data: () => ({
+    test : ''
+  }),
   components: {
     HelloWorld,
-    TotalCase,
-    CaseList
+    TotalCase
+  },
+  methods : {
+    async getAllData () {
+      try {
+        const res = await APIData.allData();
+        this.test = res.data.email;
+        console.log(res)
+      } catch (err) {
+        console.log('Error get all data', Object.values(err))
+      }
+    }
+  },
+  beforeCreate() {
+    this.getAllData()
   }
 }
 </script>
