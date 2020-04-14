@@ -4,6 +4,7 @@
     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <TotalCase totalCase="400000"/>
     <CaseList Message="Coucou"/>
+    <LastUpdate Update="GetDayDate()"/>
     
   </div>
 </template>
@@ -12,6 +13,7 @@
 //import HelloWorld from './components/HelloWorld.vue'
 import TotalCase from './components/TotalCase.vue'
 import CaseList from './components/CaseList.vue'
+import LastUpdate from './components/LastUpdate.vue'
 import APIData from './Services/GetData'
 
 export default {
@@ -22,7 +24,8 @@ export default {
   components: {
     //HelloWorld,
     TotalCase,
-    CaseList
+    CaseList,
+    LastUpdate
   },
   methods : {
     async getAllData () {
@@ -33,8 +36,16 @@ export default {
       } catch (err) {
         console.log('Error get all data', Object.values(err))
       }
+    },
+    GetDayDate : function () {
+      var date = new Date()
+      var text = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
+      console.log(text)
+      return text;
+      
     }
   },
+
   beforeCreate() {
     //this.getAllData()
   }

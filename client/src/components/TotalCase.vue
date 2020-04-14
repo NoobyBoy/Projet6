@@ -9,7 +9,7 @@
 export default {
   name: 'Test',
   props: {
-    totalCase: Number
+    totalCase: String
   }
 }
 </script>
