@@ -1,17 +1,53 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
+    <TotalCase totalCase="400000"/>
+    <CaseList Message="Coucou"/>
+    <LastUpdate Update="GetDayDate()"/>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from './components/HelloWorld.vue'
+import TotalCase from './components/TotalCase.vue'
+import CaseList from './components/CaseList.vue'
+import LastUpdate from './components/LastUpdate.vue'
+import APIData from './Services/GetData'
 
 export default {
   name: 'App',
+  data: () => ({
+    test : ''
+  }),
   components: {
-    HelloWorld
+    //HelloWorld,
+    TotalCase,
+    CaseList,
+    LastUpdate
+  },
+  methods : {
+    async getAllData () {
+      try {
+        const res = await APIData.allData();
+        this.test = res.data.email;
+        console.log(res)
+      } catch (err) {
+        console.log('Error get all data', Object.values(err))
+      }
+    },
+    GetDayDate : function () {
+      var date = new Date()
+      var text = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
+      console.log(text)
+      return text;
+      
+    }
+  },
+
+  beforeCreate() {
+    //this.getAllData()
   }
 }
 </script>
