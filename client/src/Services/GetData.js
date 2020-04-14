@@ -1,4 +1,4 @@
-import Api from 'src/Services/API'
+import Api from './API'
 
 export default {
     allData () {

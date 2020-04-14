@@ -11,7 +11,7 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import TotalCase from './components/TotalCase.vue'
-import APIData from 'Services/GetData'
+import APIData from './Services/GetData'
 
 export default {
   name: 'App',
@@ -34,7 +34,7 @@ export default {
     }
   },
   beforeCreate() {
-    this.getAllData()
+    //this.getAllData()
   }
 }
 </script>
