@@ -1,16 +1,17 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <TotalCase totalCase="400000"/>
-    <CaseList Country="['US 123456', 'Test', 'Hello']"/>
+    <CaseList Message="Coucou"/>
     
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from './components/HelloWorld.vue'
 import TotalCase from './components/TotalCase.vue'
+import CaseList from './components/CaseList.vue'
 import APIData from './Services/GetData'
 
 export default {
@@ -19,8 +20,9 @@ export default {
     test : ''
   }),
   components: {
-    HelloWorld,
-    TotalCase
+    //HelloWorld,
+    TotalCase,
+    CaseList
   },
   methods : {
     async getAllData () {

@@ -1,12 +1,14 @@
 <template>
 <div>
 <p>
-    Confirmed Cases by Country/Regions/Sovereignty
+    Confirmed Cases by Country/Regions/Sovereignty {{Message}}
 </p>
 <ol>
-    <li v-for="todo in Country">
-        {{ todo.text}}
+    <test v-for="todo in Country" :key="todo.message">
+    <li>
+        {{todo}}
     </li>
+    </test>
 </ol>
 </div>
 </template>
@@ -15,7 +17,11 @@
 export default {
   name: 'Test',
   props: {
-    Country: Array
+    Country: [
+        {message: 'US 123456'}, 
+        {message: 'Test'}, 
+        {message:'Hello'}
+    ]
   }
 }
 </script>
