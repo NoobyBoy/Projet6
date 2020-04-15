@@ -35,6 +35,7 @@
     </v-app-bar>-->
 
     <v-content>
+      <Menu/>
       <TotalCase totalCase="400000"/>
       <CaseList Message="Coucou"/>
       <LastUpdate   :method="GetDayDate"/>
@@ -44,6 +45,7 @@
 
 <script>
   //import HelloWorld from './components/HelloWorld.vue'
+  import Menu from './components/Menu.vue'
   import TotalCase from './components/TotalCase.vue'
   import CaseList from './components/CaseList.vue'
   import LastUpdate from './components/LastUpdate.vue'
@@ -61,7 +63,8 @@
       //HelloWorld,
       TotalCase,
       CaseList,
-      LastUpdate
+      LastUpdate,
+      Menu
     },
     methods : {
       async getCountriesData () {
