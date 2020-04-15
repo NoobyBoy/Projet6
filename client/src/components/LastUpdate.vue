@@ -9,7 +9,12 @@
 export default {
   name: 'Update',
   props: {
-    Update: Text
+    Update : String,
+    method: {type: Function},
+  },
+  mounted() {
+    
+    this.Update = this.method();
   }
 }
 </script>

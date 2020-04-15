@@ -37,7 +37,7 @@
     <v-content>
       <TotalCase totalCase="400000"/>
       <CaseList Message="Coucou"/>
-      <LastUpdate Update="GetDayDate()"/>
+      <LastUpdate   :method="GetDayDate"/>
     </v-content>
   </v-app>
 </template>
