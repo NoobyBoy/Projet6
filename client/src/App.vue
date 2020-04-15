@@ -1,66 +1,91 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <TotalCase totalCase="400000"/>
-    <CaseList Message="Coucou"/>
-    <LastUpdate Update="GetDayDate()"/>
-    
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
+
+        <v-img
+          alt="Vuetify Name"
+          class="shrink mt-1 hidden-sm-and-down"
+          contain
+          min-width="100"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+          width="100"
+        />
+      </div>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Latest Release</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-content>
+      <TotalCase totalCase="400000"/>
+      <CaseList Message="Coucou"/>
+      <LastUpdate Update="GetDayDate()"/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
-import TotalCase from './components/TotalCase.vue'
-import CaseList from './components/CaseList.vue'
-import LastUpdate from './components/LastUpdate.vue'
-import APIData from './Services/GetData'
+  //import HelloWorld from './components/HelloWorld.vue'
+  import TotalCase from './components/TotalCase.vue'
+  import CaseList from './components/CaseList.vue'
+  import LastUpdate from './components/LastUpdate.vue'
+  import APIData from './services/GetData'
 
-export default {
-  name: 'App',
-  data: () => ({
-    varAllData : []
-  }),
-  components: {
-    //HelloWorld,
-    TotalCase,
-    CaseList,
-    LastUpdate
-  },
-  methods : {
-    async getAllData () {
-      try {
-        const res = await APIData.allData();
-        this.varAllData = res.data.data;
-        console.log("all data : ")
-        console.log(this.varAllData)
-      } catch (err) {
-        console.log('Error get all data', Object.values(err))
+  export default {
+    name: 'App',
+    data: () => ({
+      varAllData : []
+    }),
+    components: {
+      //HelloWorld,
+      TotalCase,
+      CaseList,
+      LastUpdate
+    },
+    methods : {
+      async getAllData () {
+        try {
+          const res = await APIData.allData();
+          this.varAllData = res.data.data;
+          console.log("all data : ")
+          console.log(this.varAllData)
+        } catch (err) {
+          console.log('Error get all data', Object.values(err))
+        }
+      },
+      GetDayDate : function () {
+        var date = new Date()
+        var text = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
+        console.log(text)
+        return text;
+
       }
     },
-    GetDayDate : function () {
-      var date = new Date()
-      var text = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
-      console.log(text)
-      return text;
-      
+
+
+    created() {
+      this.getAllData()
     }
-  },
-
-
-  created() {
-    this.getAllData()
   }
-}
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
