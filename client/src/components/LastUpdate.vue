@@ -1,7 +1,7 @@
 <template>
 <div id=Day>
 <h1>Last Updated at (M/D/YYYY)</h1>
-<p>{{Update}}</p>
+<p>{{this.method()}}</p>
 </div>
 </template>
 
@@ -12,9 +12,5 @@ export default {
     Update : String,
     method: {type: Function},
   },
-  mounted() {
-    
-    this.Update = this.method();
-  }
 }
 </script>
