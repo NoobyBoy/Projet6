@@ -1,7 +1,13 @@
 import Api from './API'
 
 export default {
-    allData () {
-        return Api().get('/all')
+    getCountries () {
+        return Api().get('/countries')
+    },
+    getStates () {
+        return Api().get('/zones')
+    },
+    getCities () {
+        return Api().get('/cities')
     }
 }

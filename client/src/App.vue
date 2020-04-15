@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
+   <!-- <v-app-bar
       app
       color="primary"
       dark
@@ -28,14 +28,11 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
+        href="https://github.com/vuetifyjs/vuetify/releases/latest">
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
-    </v-app-bar>
+    </v-app-bar>-->
 
     <v-content>
       <TotalCase totalCase="400000"/>
@@ -55,7 +52,10 @@
   export default {
     name: 'App',
     data: () => ({
-      varAllData : []
+      countriesData : [],
+      statesData : [],
+      citiesData : [],
+      test : String
     }),
     components: {
       //HelloWorld,
@@ -64,14 +64,34 @@
       LastUpdate
     },
     methods : {
-      async getAllData () {
+      async getCountriesData () {
         try {
-          const res = await APIData.allData();
-          this.varAllData = res.data.data;
-          console.log("all data : ")
-          console.log(this.varAllData)
+          const res = await APIData.getCountries();
+          this.countriesData = res.data.data;
+          console.log("Countries data : ")
+          console.log(this.countriesData)
         } catch (err) {
-          console.log('Error get all data', Object.values(err))
+          console.log('Error get countries data', Object.values(err))
+        }
+      },
+      async getStatesData () {
+        try {
+          const res = await APIData.getStates();
+          this.statesData = res.data.data;
+          console.log("States data :")
+          console.log(this.statesData)
+        } catch (err) {
+          console.log('Error get states data', Object.values(err))
+        }
+      },
+      async getCitiesData () {
+        try {
+          const res = await APIData.getCities();
+          this.citiesData = res.data.data;
+          console.log("Cities data : ")
+          console.log(this.citiesData)
+        } catch (err) {
+          console.log('Error get cities data', Object.values(err))
         }
       },
       GetDayDate : function () {
@@ -79,13 +99,14 @@
         var text = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
         console.log(text)
         return text;
-
       }
     },
 
 
     created() {
-      this.getAllData()
+      this.getCountriesData()
+      this.getStatesData()
+      this.getCitiesData()
     }
   }
 </script>
