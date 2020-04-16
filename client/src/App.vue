@@ -33,31 +33,36 @@
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>-->
-
-    <v-content>
-      <Menu/>
-      <TotalCase totalCase="400000"/>
-      <CaseList Message="Coucou"/>
-      <LastUpdate   :method="GetDayDate"/>
-    </v-content>
-  </v-app>
+        <v-content v-if="loading">
+            <h1>Loading...</h1>
+        </v-content>
+        <v-content v-else>
+            <Menu/>
+            <TotalCase totalCase="400000"/>
+            <CaseList
+                    v-bind:countries-data="countriesData"
+                    v-bind:states-data="statesData"
+                    v-bind:cities-data="citiesData"/>
+            <LastUpdate   :method="GetDayDate"/>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
   //import HelloWorld from './components/HelloWorld.vue'
   import Menu from './components/Menu.vue'
   import TotalCase from './components/TotalCase.vue'
-  import CaseList from './components/CaseList.vue'
+  import CaseList from './components/caseList/CaseList.vue'
   import LastUpdate from './components/LastUpdate.vue'
   import APIData from './services/GetData'
 
   export default {
     name: 'App',
     data: () => ({
-      countriesData : [],
-      statesData : [],
-      citiesData : [],
-      test : String
+        countriesData : null,
+        statesData : null,
+        citiesData : null,
+        loading : true
     }),
     components: {
       //HelloWorld,
@@ -67,12 +72,37 @@
       Menu
     },
     methods : {
-      async getCountriesData () {
+        async getData () {
+            try {
+                const countries = await APIData.getCountries();
+                this.countriesData = countries.data.data;
+
+                const states = await APIData.getStates();
+                this.statesData = states.data.data;
+
+                const cities = await APIData.getCities();
+                this.citiesData = cities.data.data;
+
+                console.log("Countries data : ");
+                console.log(this.countriesData);
+                console.log("States data : ");
+                console.log(this.statesData);
+                console.log("Cities data : ");
+                console.log(this.citiesData);
+                this.loading = false
+
+            } catch (err) {
+                console.log('Error get countries data', Object.values(err))
+            }
+        },
+      /*async getCountriesData () {
         try {
           const res = await APIData.getCountries();
           this.countriesData = res.data.data;
-          console.log("Countries data : ")
-          console.log(this.countriesData)
+          console.log("Countries data : ");
+          console.log(this.countriesData);
+          this.loading = false
+
         } catch (err) {
           console.log('Error get countries data', Object.values(err))
         }
@@ -81,8 +111,8 @@
         try {
           const res = await APIData.getStates();
           this.statesData = res.data.data;
-          console.log("States data :")
-          console.log(this.statesData)
+          console.log("States data :");
+          console.log(this.statesData);
         } catch (err) {
           console.log('Error get states data', Object.values(err))
         }
@@ -91,12 +121,12 @@
         try {
           const res = await APIData.getCities();
           this.citiesData = res.data.data;
-          console.log("Cities data : ")
-          console.log(this.citiesData)
+          console.log("Cities data : ");
+          console.log(this.citiesData);
         } catch (err) {
           console.log('Error get cities data', Object.values(err))
         }
-      },
+      },*/
       GetDayDate : function () {
         var date = new Date()
         var text = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
@@ -107,9 +137,10 @@
 
 
     created() {
-      this.getCountriesData()
-      this.getStatesData()
-      this.getCitiesData()
+        this.getData()
+      /*this.getCountriesData();
+      this.getStatesData();
+      this.getCitiesData();*/
     }
   }
 </script>
