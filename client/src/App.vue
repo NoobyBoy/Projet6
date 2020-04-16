@@ -43,6 +43,14 @@
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"/>
+            <TotalDeath
+                    v-bind:countries-data="countriesData"
+                    v-bind:states-data="statesData"
+                    v-bind:cities-data="citiesData"/>
+            <TotalReco
+                    v-bind:countries-data="countriesData"
+                    v-bind:states-data="statesData"
+                    v-bind:cities-data="citiesData"/>
             <LastUpdate   :method="GetDayDate"/>
         </v-content>
     </v-app>
@@ -54,6 +62,8 @@
   import TotalCase from './components/TotalCase.vue'
   import CaseList from './components/caseList/CaseList.vue'
   import LastUpdate from './components/LastUpdate.vue'
+  import TotalDeath from './components/totalDeath/TotalDeath.vue'
+  import TotalReco from './components/totalReco/TotalRecover.vue'
   import APIData from './services/GetData'
 
   export default {
@@ -69,7 +79,9 @@
       TotalCase,
       CaseList,
       LastUpdate,
-      Menu
+      Menu,
+      TotalDeath,
+      TotalReco
     },
     methods : {
         async getData () {
