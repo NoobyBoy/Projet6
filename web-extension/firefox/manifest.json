@@ -1,0 +1,37 @@
+{
+
+  "manifest_version": 2,
+  "name": "CoronaBoard",
+  "version": "1.0",
+
+  "description": "Web extension to monitor a part of the globe about the corona",
+  "icons": {
+    "48": "icons/bioH-48.png",
+    "96": "icons/bioH-96.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches" : ["*://*/*"],
+      "js" : [
+          "getData.js"
+      ]
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/bioH-32.png",
+    "default_title": "CoronaBoard",
+    "default_popup": "popup/corona.html"
+  },
+
+  "web_accessible_resources": []
+
+}

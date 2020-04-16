@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="corona.css"/>
+  </head>
+
+  <body>
+      <!-- Tab links -->
+     <div class="tab">
+         <div class="tabZone">Country</div>
+         <div class="tabZone">Region / State</div>
+         <div class="tabZone">City</div>
+     </div>
+
+     <!-- Tab content -->
+     <div id="Country" class="tabcontent">
+       <h3>Search by country</h3>
+       <div class="complete" style="width:300px;">
+           <input id="myInputCountry" type="text" name="countries" placeholder="Country">
+       </div>
+       <input type="button" value="Search" class="validate" id="countries">
+     </div>
+
+     <div id="Region / State" class="tabcontent">
+         <h3>Search by Region / state</h3>
+         <div class="complete" style="width:300px;">
+             <input id="myInputRegion" type="text" name="zones" placeholder="Region / State">
+         </div>
+         <input type="button" value="Search" class="validate" id="zones">
+     </div>
+
+     <div id="City" class="tabcontent">
+         <h3>Search by city</h3>
+         <div class="complete" style="width:300px;">
+             <input id="myInputCity" type="text" name="cities" placeholder="City">
+         </div>
+         <input type="button" value="Search" class="validate" id="cities">
+     </div>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+     <script src="corona.js"></script>
+
+  </body>
+
+</html>

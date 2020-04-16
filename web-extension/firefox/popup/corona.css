@@ -1,0 +1,87 @@
+html, body {
+  width: 450px;
+}
+
+/* Style the tab */
+.tab {
+ overflow: hidden;
+ border: 1px solid #ccc;
+ background-color: #f1f1f1;
+}
+
+/* Style the divs that are used to open the tab content */
+.tab div {
+ background-color: inherit;
+ float: left;
+ border: none;
+ outline: none;
+ cursor: pointer;
+ padding: 14px 16px;
+ transition: 0.3s;
+}
+
+/* Change background color of divs on hover */
+.tab div:hover {
+ background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab div.active {
+ background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+ display: none;
+ padding: 6px 12px;
+ border: 1px solid #ccc;
+ border-top: none;
+}
+
+* { box-sizing: border-box; }
+
+.complete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+input[type=button] {
+  background-color: DodgerBlue;
+  color: #fff;
+}
+.complete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the complete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.complete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.complete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.complete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
