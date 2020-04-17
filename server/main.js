@@ -7,10 +7,10 @@ var app = express();
 var EventEmitter = require('events').EventEmitter;
 var results = [];
 var attempt = 1;
-
-
+let death;
 
 var em = new EventEmitter();
+
 
 dataRequest.scrapData(em);
 em.on('scraped', function(result) {
@@ -33,6 +33,20 @@ em.on('scraped', function(result) {
         throw result
     });
     em2.on('scrapeFailFile', function(result){
+        throw result
+    });
+
+    var em3 = new EventEmitter();
+    dataRequest.getDeathByDay(em3)
+    em3.on('scraped', function(result) {
+        death = result;
+    })
+
+    em3.on('scrapeFailRequest', function(result) {
+        throw result
+    });
+
+    em3.on('scrapeFailFile', function(result) {
         throw result
     });
 });
@@ -116,6 +130,13 @@ app.get('/data/cities/:city', function(req, res) {
         else res.status(400).json({status : 400, data : []})
     } else res.status(400).json({status : 400, data : []})
 });
+
+app.get('/data/graph', function(req, res) {
+    if (death)
+        res.status(200).json({status : 200, data : death});
+    else
+        res.status(400).json({status : 400, data : [] })
+})
 
 app.set('port', 8080);
 
