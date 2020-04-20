@@ -1,7 +1,7 @@
 <template>
 <div id=Day>
 <h1>Last Updated at (M/D/YYYY)</h1>
-<p>{{Update}}</p>
+<p>{{this.method()}}</p>
 </div>
 </template>
 
@@ -9,7 +9,8 @@
 export default {
   name: 'Update',
   props: {
-    Update: Text
-  }
+    Update : String,
+    method: {type: Function},
+  },
 }
 </script>
