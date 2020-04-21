@@ -2,9 +2,11 @@
     "name": "projet6",
     "version": "0.1.0",
     "dependencies": {
-        "ejs": "^3.0.2",
+        "axios": "^0.19.2",
+        "cors": "^2.8.5",
+        "csv-parser": "^2.3.2",
         "express": "^4.17.1",
-        "csv-parser": "^2.3.2"
+        "mongoose": "^5.9.9"
     },
     "author": "Tim.Cav",
     "description": "Corona Board"

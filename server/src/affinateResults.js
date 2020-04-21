@@ -1,26 +1,47 @@
+const dateFormater = require('./dateFormater');
+
+
+exports.testResult = function(res) {
+    process.stdout.write("Testing the integrity of the data ... ");
+    if (Object.keys(res.Country).length < 90|| Object.keys(res.Zone).length < 43 || Object.keys(res.City).length < 700)
+        return false;
+    if (!res.Country["France"] || !res.Country["Afghanistan"] || !res.Country["Russia"] || !res.Country["Zimbabwe"])
+        return false
+    if (!res.Zone["Alberta"] || !res.Zone["Quebec"] || !res.Zone["Hubei"] || !res.Zone["Zhejiang"])
+        return false
+    if (!res.City["Abbeville"] || !res.City["Delta"] || !res.City["Mesa"] || !res.City["Zavala"])
+        return false
+    console.log("Done");
+    return true;
+}
+
+
 exports.missingCountries = function(res) {
     process.stdout.write("Adding missing countries ... ");
-    res.Country["US"] = Object.assign({}, res.Country["France"]);
-    res.Country["US"].Country_Region = "US";
-    res.Country["US"].Lat = "39.381266";
-    res.Country["US"].Long_ = "-97.922211";
-    res.Country["US"].Combined_Key = "US";
-    res.Country["US"].Confirmed = 0;
-    res.Country["US"].Deaths = 0;
-    res.Country["US"].Recovered =0;
-    res.Country["US"].Active = 0;
-    res.Country["US"].History = []
-    res.Country["China"] = Object.assign({}, res.Country["France"]);
-    res.Country["China"].Country_Region = "China";
-    res.Country["China"].Lat = "35.486703";
-    res.Country["China"].Long_ = "101.901875";
-    res.Country["China"].Combined_Key = "China";
-    res.Country["China"].Confirmed = 0;
-    res.Country["China"].Deaths = 0;
-    res.Country["China"].Recovered =0;
-    res.Country["China"].Active = 0;
-    res.Country["China"].History = []
-
+    if (!res.Country["US"]) {
+        res.Country["US"] = Object.assign({}, res.Country[Object.keys(res.Country)[0]]);
+        res.Country["US"].Country_Region = "US";
+        res.Country["US"].Lat = "39.381266";
+        res.Country["US"].Long_ = "-97.922211";
+        res.Country["US"].Combined_Key = "US";
+        res.Country["US"].Confirmed = 0;
+        res.Country["US"].Deaths = 0;
+        res.Country["US"].Recovered =0;
+        res.Country["US"].Active = 0;
+        res.Country["US"].History = []
+    }
+    if (!res.Country["China"]) {
+        res.Country["China"] = Object.assign({}, res.Country[Object.keys(res.Country)[0]]);
+        res.Country["China"].Country_Region = "China";
+        res.Country["China"].Lat = "35.486703";
+        res.Country["China"].Long_ = "101.901875";
+        res.Country["China"].Combined_Key = "China";
+        res.Country["China"].Confirmed = 0;
+        res.Country["China"].Deaths = 0;
+        res.Country["China"].Recovered =0;
+        res.Country["China"].Active = 0;
+        res.Country["China"].History = []
+    }
     console.log("Done");
 }
 
@@ -66,7 +87,7 @@ exports.affinate = function(res) {
 
 exports.Total = function(res) {
     process.stdout.write("Begining of total calculation ... ");
-    res.Country["Total"] = Object.assign({}, res.Country["France"]);
+    res.Country["Total"] = Object.assign({}, res.Country[Object.keys(res.Country)[0]]);
     res.Country["Total"].Country_Region = "Total";
     res.Country["Total"].Lat = "0";
     res.Country["Total"].Long_ = "0";
@@ -75,7 +96,7 @@ exports.Total = function(res) {
     res.Country["Total"].Deaths = 0;
     res.Country["Total"].Recovered =0;
     res.Country["Total"].Active = 0;
-    res.Country["Total"].History = new Array(res.Country["France"].History.length).fill(0);
+    res.Country["Total"].History = new Array(res.Country[Object.keys(res.Country)[0]].History).fill(0);
     for (key in res.Country) {
         data = res.Country[key];
         if (data.Country_Region != "Total") {
