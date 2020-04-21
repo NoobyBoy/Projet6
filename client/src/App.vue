@@ -43,7 +43,7 @@
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"/>
-            <TotalDeath
+           <TotalDeath
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"/>
