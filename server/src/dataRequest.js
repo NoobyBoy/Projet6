@@ -7,7 +7,6 @@ var EventEmitter = require('events').EventEmitter;
 const GetErr = '404: Not Found'
 
 
-
 exports.scrapData = function(em, date=null)  {
     //Initialisation of url and date etc...
     base_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/'
@@ -63,6 +62,78 @@ exports.scrapData = function(em, date=null)  {
       em.emit('scrapeFailRequest', "Error: " + err.message);
     });
 }
+
+
+fillDate = function() {
+    const today = new Date();
+    const firstDay = new Date("January 22, 2020");
+    let death = {};
+    let date;
+
+    while (dateFormater.m_d_yy(today) != dateFormater.m_d_yy(firstDay)) {
+        date = dateFormater.m_d_yy(firstDay);
+        death[date] = 0;
+        firstDay.setDate(firstDay.getDate() + 1)
+    }
+    return (death);
+}
+
+
+exports.getDeathByDay = function(em) {
+    //Url and date initialization
+
+    base_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+    const death = fillDate();
+
+    fs.writeFile('./data/' + 'DeathHistory.csv', '', function() {});
+    process.stdout.write("Begining of the Request to " + base_url + "\n");
+
+    // Request start
+    https.get(base_url, (resp) => {
+        let data = '';
+
+        resp.on('data', (chunk) => {
+            process.stdout.write(".");
+            data += chunk;
+            var c = '';
+            c += chunk;
+
+            fs.appendFile('./data/' + 'DeathHistory.csv', c.replace(/\//g, "_"), function (err) {
+                if (err)
+                    em.emit('scrapeFailFile', err.message);
+            });
+        });
+
+        resp.on('end', () => {
+            console.log("Request Done\n");
+            if (data == GetErr) {
+                em.emit("scrapeFailUrl", today);
+                return;
+            }
+            process.stdout.write("Starting parsing of the csv File ...\n");
+            fs.createReadStream('./data/' + 'DeathHistory.csv')
+                .pipe(csv())
+                .on('data', (data) => {
+                    const keys = Object.keys(data);
+                    const array = keys.map(key => ({ key: key, value: data[key] }));
+                    for (i in array) {
+                        if (array[i].key != "Province_State" && array[i].key != "Country_Region" &&
+                        array[i].key.includes("_") && array[i].value != "undefined")
+                            death[array[i].key] += Number(array[i].value);
+                    }
+                })
+                .on('end', () => {
+                    const keys = Object.keys(death);
+                    const array = keys.map(key => ({ key: key, value: death[key] }));
+                    console.log(" Parsing Done\n");
+                    let final = new Map();
+                    for (i in array)
+                        final[dateFormater.m_d_yy_To_mm_dd_yyyy(array[i].key)] = array[i].value
+                    em.emit('scraped', final);
+                });
+        });
+    });
+};
 
 
 getHistory = function(data) {
