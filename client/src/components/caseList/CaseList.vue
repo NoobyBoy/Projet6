@@ -7,15 +7,29 @@
     <v-container
             style="max-height: 450px; background: aqua"
             class="overflow-y-auto">
-        <v-row justify="center" align="center" v-if="itemSelected.length !== 0">
+        <v-row justify="center" align="center" v-if="countryIsSelected || stateIsSelected || citiesIsSelected">
             <v-chip
-                    v-for="(item, i) in itemSelected"
-                    :key="i"
+                    v-if="countryIsSelected"
                     class="ma-2"
                     close
-            @click:close="removeChip(item[0])">
-                {{item[1]}}
+            @click:close="removeChip(0)">
+                {{countrySelect}}
             </v-chip>
+            <v-chip
+                    v-if="stateIsSelected"
+                    class="ma-2"
+                    close
+                    @click:close="removeChip(1)">
+                {{stateSelect}}
+            </v-chip>
+            <v-chip
+                    v-if="citiesIsSelected"
+                    class="ma-2"
+                    close
+                    @click:close="removeChip(2)">
+                {{citySelect}}
+            </v-chip>
+
         </v-row>
         <v-row
                 align="center"
@@ -68,7 +82,9 @@
             dataToDisplay: {},
             adminState : Admin.Admin0,
             caseTitle : 'Confirmed Cases by Country/Region/Sovereignty',
-            itemSelected : [],
+            countrySelect : null,
+            stateSelect : null,
+            citySelect : null,
             countryIsSelected : false,
             stateIsSelected : false,
             citiesIsSelected : false
@@ -117,22 +133,19 @@
                 let tmp = Parser.parseName(item.target.innerText);
 
                 if (this.adminState === Admin.Admin0 && !this.countryIsSelected) {
-                    this.itemSelected.push([this.adminState, tmp])
+                    this.countrySelect = tmp
                     this.countryIsSelected = true
-                    console.log(this.itemSelected)
+                    //console.log(this.itemSelected)
                 }
                 if (this.adminState === Admin.Admin1 && !this.stateIsSelected) {
-                    this.itemSelected.push([this.adminState, tmp])
-                    this.itemSelected.map(this.adminState, tmp)
-
+                    this.stateSelect = tmp
                     this.stateIsSelected = true
                 }
                 if (this.adminState === Admin.Admin2 && !this.citiesIsSelected) {
-                    this.itemSelected.push([this.adminState, tmp])
-                    this.itemSelected.map(this.adminState, tmp)
-
+                    this.citySelect = tmp
                     this.citiesIsSelected = true
                 }
+                this.sendToApp()
                 //console.log(this.itemSelected)
                 /*if (this.adminState === Admin.Admin0) {
                     if (this.itemSelected === tmp) {
@@ -147,8 +160,23 @@
 
             },
             removeChip (item) {
-                console.log(item)
-                //console.log(this.itemSelected.find(item))
+                if (item === Admin.Admin0) {
+                    this.countryIsSelected = false
+                    this.countrySelect = null
+                } else if (item === Admin.Admin1) {
+                    this.stateIsSelected = false
+                    this.stateSelect = null
+                } else {
+                    this.citiesIsSelected = false
+                    this.citySelect = null
+                }
+                this.sendToApp()
+            },
+            sendToApp() {
+                this.$emit('Selection-sent',
+                    {country : this.countrySelect,
+                    state : this.stateSelect,
+                    city : this.citySelect})
             }
         },
         created() {
