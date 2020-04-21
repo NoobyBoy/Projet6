@@ -4,10 +4,16 @@ const cors = require('cors')
 const dataRequest = require('./src/dataRequest');
 const affinater = require('./src/affinateResults')
 const database = require('./src/databaseManagement')
+const graph = require('./src/graph')
 const Day = require('./models/day');
 
 var app = express();
 
+var death;
+
+graph.getDeath()
+.then(r => death = r)
+.catch(r => death = r);
 
 function toUpper(str) {
 return str
@@ -69,6 +75,7 @@ app.get('/data/countries', function(req, res) {
     .catch(err => res.status(400).json(err))
 });
 
+/*
 app.get('/data/countries/:date', function(req, res) {
     database.GetDataFor(req.params.date)
     .then(data => {
@@ -80,6 +87,7 @@ app.get('/data/countries/:date', function(req, res) {
     })
     .catch(err => res.status(400).json(err))
 });
+*/
 
 app.get('/data/countries/:country', function(req, res) {
     if (req.params.country) {
@@ -129,6 +137,7 @@ app.get('/data/zones', function(req, res) {
     .catch(err => res.status(400).json(err))
 });
 
+/*
 app.get('/data/zones/:date', function(req, res) {
     database.GetDataFor(req.params.date)
     .then(data => {
@@ -140,6 +149,7 @@ app.get('/data/zones/:date', function(req, res) {
     })
     .catch(err => res.status(400).json(err))
 });
+*/
 
 app.get('/data/zones/:zone', function(req, res) {
     if (req.params.zone) {
@@ -187,6 +197,7 @@ app.get('/data/cities', function(req, res) {
     .catch(err => res.status(400).json(err))
 });
 
+/*
 app.get('/data/cities/:date', function(req, res) {
     database.GetDataFor(req.params.date)
     .then(data => {
@@ -198,6 +209,7 @@ app.get('/data/cities/:date', function(req, res) {
     })
     .catch(err => res.status(400).json(err))
 });
+*/
 
 app.get('/data/cities/:city', function(req, res) {
     if (req.params.city) {
@@ -269,6 +281,13 @@ app.get('/data/list/cities', function(req, res) {
     .catch(err => res.status(400).json(err))
 });
 
+
+app.get('/data/graph', function(req, res) {
+    if (death)
+        res.status(200).json({status : 200, data : death});
+    else
+        res.status(400).json({status : 400, data : [] })
+})
 
 
 app.set('port', 8080);
