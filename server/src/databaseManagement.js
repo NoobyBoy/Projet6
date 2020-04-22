@@ -115,9 +115,22 @@ GetLastData = function(i = 0) {
 
 }
 
+exports.GetData = function(date=null) {
+    return new Promise((resolve, reject) => {
+        if (date) {
+            console.log(date);
+            GetDataFor(new Date(date))
+            .then(data => {resolve(data)})
+            .catch(err => reject(err));
+        } else {
+            GetLastData()
+            .then(data => resolve(data))
+            .catch(err => reject(err));
+        }
+    });
+}
 
-exports.GetLastData = GetLastData;
-exports.GetDataFor = GetDataFor;
+
 /*
 exports.GetDataToday = function() {
 
