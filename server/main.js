@@ -1,5 +1,6 @@
 const http = require('http');
 const mongoose = require('mongoose');
+const shell = require('./src/shell');
 
 const app = require('./app');
 const database = require('./src/databaseManagement')
@@ -53,4 +54,4 @@ server.on('listening', () => {
 console.log('Listening on 8080');
 server.listen(8080);
 
-//database.GetAllData();
+shell.shell();

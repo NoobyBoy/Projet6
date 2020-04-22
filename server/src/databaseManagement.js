@@ -6,23 +6,29 @@ const dateFormater = require('./dateFormater')
 var EventEmitter = require('events').EventEmitter;
 
 
-FillForDate = function(date, em) {
+
+
+FillForDate = function(date, em, update) {
     Day.findOne({date : new Date(date)})
         .then(day => {
             if (day == null) {
                 console.log("Data not yet saved in the Database for the date of " + date);
-                fillDatabase(new Date(date), em);
+                fillDatabase(new Date(date), em, update);
             } else {
                 console.log("Data already saved in the Database for the date of " + date);
-                em.emit('next');
+                if (update) {
+                    fillDatabase(new Date(date), em, update);
+                } else {
+                    em.emit('next');
+                }
             }
         })
-        .catch(error => console.log(errror));
+        .catch(error => console.log(error));
 };
 
+exports.FillForDate = FillForDate;
 
-
-fillDatabase = function(date, emiter) {
+fillDatabase = function(date, emiter, update) {
 
     var results = [];
     var em = new EventEmitter();
@@ -45,9 +51,28 @@ fillDatabase = function(date, emiter) {
                 zone : JSON.stringify(results.Zone),
                 city : JSON.stringify(results.City)
             });
-            day.save()
-              .then(() => {console.log("Data succesffully save in the Database"), emiter.emit("next")})
-              .catch(error => console.log(error));
+            if (update) {
+                Day.findOne({date : new Date(date)})
+                .then (d => {
+                    if (d == null) {
+                        day.save()
+                          .then(() => {console.log("Data succesffully save in the Database"), emiter.emit("next")})
+                          .catch(error => console.log(error));
+                    } else {
+                        Day.updateOne({date : new Date(date)}, {
+                            country : JSON.stringify(results.Country),
+                            zone : JSON.stringify(results.Zone),
+                            city : JSON.stringify(results.City)
+                        })
+                        .then(() => {console.log("Data succesffully save in the Database"), emiter.emit("next")})
+                        .catch(error => console.log(error));
+                    }
+                })
+            } else {
+                day.save()
+                  .then(() => {console.log("Data succesffully save in the Database"), emiter.emit("next")})
+                  .catch(error => console.log(error));
+            }
         })
         em2.on('scrapeFailRequest', function(result){
             emiter.emit('stop');
@@ -65,15 +90,49 @@ fillDatabase = function(date, emiter) {
     });
 }
 
-exports.GetAllData = function() {
+exports.GetAllData = function(update=false) {
     var em = new EventEmitter();
 
     dayAct = new Date("January 22, 2020");
 
-    FillForDate(dateFormater.yyyy_mm_dd(dayAct), em);
+    FillForDate(dateFormater.yyyy_mm_dd(dayAct), em, update);
     em.on('next', function() {
         dayAct.setDate(dayAct.getDate() + 1);
-        FillForDate(dateFormater.yyyy_mm_dd(dayAct), em);
+        FillForDate(dateFormater.yyyy_mm_dd(dayAct), em, update);
+    });
+    em.on('stop', function() {
+        console.log("stoped");
+        return;
+    });
+
+}
+
+DeleteForDate = function(date, em) {
+    Day.deleteOne({date : new Date(date)})
+        .then(day => {
+            if (day == null) {
+                em.emit('stop')
+            } else {
+            console.log("day of " + date + "deleted");
+            em.emit('next')
+            }
+        })
+        .catch(error => {console.log(error); em.emit('stop')});
+}
+
+exports.DeleteForDate = DeleteForDate;
+
+exports.DeleteAllData = function() {
+    var em = new EventEmitter();
+    ohoh = new Date();
+    dayAct = new Date("January 22, 2020");
+
+    DeleteForDate(dateFormater.yyyy_mm_dd(dayAct), em);
+    em.on('next', function() {
+        dayAct.setDate(dayAct.getDate() + 1);
+        if (dateFormater.yyyy_mm_dd(dayAct) == dateFormater.yyyy_mm_dd(ohoh))
+            return;
+        DeleteForDate(dateFormater.yyyy_mm_dd(dayAct), em);
     });
     em.on('stop', function() {
         console.log("stoped");
@@ -118,13 +177,12 @@ GetLastData = function(i = 0) {
 exports.GetData = function(date=null) {
     return new Promise((resolve, reject) => {
         if (date) {
-            console.log(date);
             GetDataFor(new Date(date))
             .then(data => {resolve(data)})
             .catch(err => reject(err));
         } else {
             GetLastData()
-            .then(data => resolve(data))
+            .then(data => {resolve(data)})
             .catch(err => reject(err));
         }
     });

@@ -6,7 +6,6 @@ const dataRequest = require('./src/dataRequest');
 const affinater = require('./src/affinateResults')
 const database = require('./src/databaseManagement')
 const graph = require('./src/graph')
-const Day = require('./models/day');
 
 var app = express();
 
