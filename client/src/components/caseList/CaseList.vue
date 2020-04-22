@@ -1,12 +1,12 @@
 <template>
 
-<v-container style="max-height: 450px; background: #42b983;">
+<v-container style="max-height: 500px; background: #42b983;">
     <v-row justify="center" align="center">
         <v-subheader>{{caseTitle}}</v-subheader>
     </v-row>
     <v-container
-            style="max-height: 450px; background: aqua"
-            class="overflow-y-auto">
+            style="max-height: 500px; background: aqua"
+            >
         <v-row justify="center" align="center" v-if="countryIsSelected || stateIsSelected || citiesIsSelected">
             <v-chip
                     v-if="countryIsSelected"
@@ -31,37 +31,42 @@
             </v-chip>
 
         </v-row>
-        <v-row
-                align="center"
-                justify="center">
-            <v-card class="mx-auto"
-            style="background: brown;">
-                <v-list>
-                    <v-list-item-group>
-                        <v-list-item
-                                v-for="(item, i) in dataToDisplay"
-                                :key="i"
-                                @click="getItemSelect"
-                        inactive>
-                            <v-list-item-subtitle>
-                                {{item.Confirmed}}
-                            </v-list-item-subtitle>
+        <v-container class="overflow-y-auto"
+        style="max-height: 300px">
+            <v-row
+                    align="center"
+                    justify="center">
+                <v-card class="mx-auto"
+                        style="background: brown;">
+                    <v-list>
+                        <v-list-item-group>
+                            <v-list-item
+                                    v-for="(item, i) in dataToDisplay"
+                                    :key="i"
+                                    @click="getItemSelect"
+                                    inactive>
+                                <v-list-item-subtitle>
+                                    {{item.Confirmed}}
+                                </v-list-item-subtitle>
 
-                            <v-list-item-title v-if="adminState === 0">
-                                {{item.Country_Region}}
-                            </v-list-item-title>
-                            <v-list-item-title v-else-if="adminState === 1">
-                                {{item.Province_State}}
-                            </v-list-item-title>
-                            <v-list-item-title v-else>
-                                {{item.Admin2}}
-                            </v-list-item-title>
+                                <v-list-item-title v-if="adminState === 0">
+                                    {{item.Country_Region}}
+                                </v-list-item-title>
+                                <v-list-item-title v-else-if="adminState === 1">
+                                    {{item.Province_State}}
+                                </v-list-item-title>
+                                <v-list-item-title v-else>
+                                    {{item.Admin2}}
+                                </v-list-item-title>
 
-                        </v-list-item>
-                    </v-list-item-group>
-                </v-list>
-            </v-card>
-        </v-row>
+                            </v-list-item>
+                        </v-list-item-group>
+                    </v-list>
+                    <p v-if="noData">No datas available</p>
+                </v-card>
+            </v-row>
+        </v-container>
+
     </v-container>
     <selector @Admin-sent="getAdminFromSelector"/>
 </v-container>
@@ -87,7 +92,8 @@
             citySelect : null,
             countryIsSelected : false,
             stateIsSelected : false,
-            citiesIsSelected : false
+            citiesIsSelected : false,
+            noData : false
         }),
         components : {
             Selector
@@ -118,15 +124,70 @@
                 this.updateView()
             },
             updateView () {
-                if (this.adminState === Admin.Admin0) {
+                console.log("\n\n-------------UPDATE VIEW-----------\n\n")
+                this.noData = false
+                if (this.adminState === Admin.Admin0) { // ADMIN 0
+
                     this.caseTitle = 'Confirmed Cases by Country/Region/Sovereignty'
                     this.dataToDisplay = this.countriesData
-                } else if (this.adminState === Admin.Admin1) {
+
+                } else if (this.adminState === Admin.Admin1) { // ADMIN 1
+
                     this.caseTitle = 'Confirmed Cases by Province/State/Dependency'
-                    this.dataToDisplay = this.statesData
-                } else {
+
+                    if (this.countryIsSelected) {
+
+                        this.dataToDisplay = {}
+                        var i = 0
+
+                        for (let elem in this.statesData) {
+                            if (this.statesData[elem].Country_Region === this.countrySelect) {
+                                //console.log(this.statesData[elem])
+                                this.dataToDisplay[i] = this.statesData[elem]
+                                i++
+                            }
+                        }
+                        if (i === 0) {
+                            this.noData = true
+                        }
+                    } else {
+                        this.dataToDisplay = this.statesData
+                    }
+                } else {  //ADMIN 2
+
                     this.caseTitle = 'Confirmed Cases by US County'
-                    this.dataToDisplay = this.citiesData
+
+                    if (this.stateIsSelected) {
+
+                        this.dataToDisplay = {}
+                        var j = 0
+
+                        for (let elem in this.citiesData) {
+                            if (this.citiesData[elem].Province_State === this.stateSelect) {
+                                this.dataToDisplay[j] = this.citiesData[elem]
+                                j++
+                            }
+                        }
+                        if (j === 0) {
+                            this.noData = true
+                        }
+                    } else if (this.countryIsSelected) {
+                        this.dataToDisplay = {}
+                        var k = 0
+
+                        for (let elem in this.citiesData) {
+                            if (this.citiesData[elem].Country_Region === this.countrySelect) {
+                                //console.log(this.statesData[elem])
+                                this.dataToDisplay[k] = this.citiesData[elem]
+                                k++
+                            }
+                        }
+                        if (k === 0) {
+                            this.noData = true
+                        }
+                    } else {
+                        this.dataToDisplay = this.citiesData
+                    }
                 }
             },
             getItemSelect (item) {
@@ -171,6 +232,7 @@
                     this.citySelect = null
                 }
                 this.sendToApp()
+                this.updateView()
             },
             sendToApp() {
                 this.$emit('Selection-sent',
