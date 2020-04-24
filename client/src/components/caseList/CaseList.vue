@@ -124,7 +124,6 @@
                 this.updateView()
             },
             updateView () {
-                console.log("\n\n-------------UPDATE VIEW-----------\n\n")
                 this.noData = false
                 if (this.adminState === Admin.Admin0) { // ADMIN 0
 
