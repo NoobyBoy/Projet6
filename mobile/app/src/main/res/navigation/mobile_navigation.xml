@@ -13,20 +13,31 @@
 
     <fragment
         android:id="@+id/navigation_list"
-        android:name="com.example.coronapp.ui.list.ListFragment"
+        android:name="com.example.coronapp.ui.confirmedList.ListFragment"
         android:label="@string/title_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_death_list" />
 
-    <fragment
+    <!--fragment
         android:id="@+id/navigation_map"
         android:name="com.example.coronapp.ui.map.MapFragment"
         android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" /-->
+
+    <fragment
+        android:id="@+id/navigation_chart"
+        android:name="com.example.coronapp.ui.chart.FragmentChart"
+        android:label="@string/title_chart"
+        tools:layout="@layout/fragment_chart" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.coronapp.ui.dashboard.DashboardFragment"
+        android:name="com.example.coronapp.ui.deathList.DeathListFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_death_list" />
 
+    <fragment
+        android:id="@+id/navigation_tested"
+        android:name="com.example.coronapp.ui.tested.TestedFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_tested" />
 </navigation>

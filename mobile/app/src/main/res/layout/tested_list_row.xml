@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginTop="10dp" android:layout_marginBottom="10dp">
+
+    <TextView
+        android:id="@+id/listNb"
+        android:textColor="@android:color/white"
+        android:text="lol"
+        android:textSize="24dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:id="@+id/list"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/listNb"
+        android:text="@string/tested"
+        android:textColor="@color/blue"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/listName"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/listNb"
+        android:text="deaths"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/listCountry"
+        android:layout_width="100dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/listName"
+        android:layout_below="@+id/listNb"
+        android:text="@string/us"
+        android:textColor="@color/lightGrey"
+        android:textSize="20dp" />
+</RelativeLayout>
