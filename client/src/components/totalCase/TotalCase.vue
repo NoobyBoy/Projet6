@@ -1,4 +1,5 @@
 <template>
+<v-flex xs12 md4>
 <v-container style="max-height: 100px; background: dimgrey">
     <v-row justify="center" align="center">
         <v-subheader>Total Confirmed</v-subheader>
@@ -7,6 +8,7 @@
         <v-subheader style="font-size: xx-large; color: red" >{{nbConfirmed}}</v-subheader>
     </v-row>
 </v-container>
+</v-flex>
 </template>
 
 <script>
