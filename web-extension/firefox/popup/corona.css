@@ -59,6 +59,21 @@ input[type=button] {
   background-color: DodgerBlue;
   color: #fff;
 }
+
+#option h3 {
+    padding: 5px, 5px;
+}
+
+#option input {
+    height: 10px;
+}
+
+
+#save {
+    padding:  5px;
+    width: 100%;
+}
+
 .complete-items {
   position: absolute;
   border: 1px solid #d4d4d4;

@@ -107,13 +107,50 @@ exports.GetAllData = function(update=false) {
 
 }
 
+FillUngot = function(date, em) {
+    Day.findOne({date : new Date(date)})
+        .then(day => {
+            if (day == null) {
+                console.log("Data not yet saved in the Database for the date of " + date);
+                fillDatabase(new Date(date), em);
+            } else {
+                console.log("Data already saved in the Database for the date of " + date);
+                em.emit('stop');
+            }
+        })
+        .catch(error => console.log(error));
+};
+
+exports.GetAllUngot = function() {
+    var em = new EventEmitter();
+
+    dayAct = new Date();
+
+    FillUngot(dateFormater.yyyy_mm_dd(dayAct), em);
+    em.on('next', function() {
+        dayAct.setDate(dayAct.getDate() - 1);
+        FillUngot(dateFormater.yyyy_mm_dd(dayAct), em);
+    });
+    em.on('stop', function() {
+        if (dateFormater.yyyy_mm_dd(dayAct) == dateFormater.yyyy_mm_dd(new Date())) {
+            dayAct.setDate(dayAct.getDate() - 1);
+            console.log("new attempt")
+            FillUngot(dateFormater.yyyy_mm_dd(dayAct), em);
+        } else {
+            console.log("no more");
+            return;
+        }
+    });
+
+}
+
 DeleteForDate = function(date, em) {
     Day.deleteOne({date : new Date(date)})
         .then(day => {
             if (day == null) {
                 em.emit('stop')
             } else {
-            console.log("day of " + date + "deleted");
+            console.log("day of " + date + " deleted");
             em.emit('next')
             }
         })

@@ -1,16 +1,10 @@
 var Input = require('prompt-input');
 const dataRequest = require('./dataRequest');
-const affinater = require('./affinateResults')
-const database = require('./databaseManagement')
+const affinater = require('./affinateResults');
+const database = require('./databaseManagement');
 var EventEmitter = require('events').EventEmitter;
+const delayer = require('./delayer');
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://NoobyBoy:testtest@data-6apbx.mongodb.net/test?retryWrites=true&w=majority',
-  { useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true })
-  .then(() => console.log('Connection to MongoDB Done !'))
-  .catch(() => console.log('Connection to MongoDB failed !'));
 
 function toUpper(str) {
 return str
@@ -36,20 +30,6 @@ ranger = function(daaa, range) {
         return daaa.country;
     }
 }
-var dd = new Input({
-  name: 'date',
-  message: 'date >'
-});
-var rr = new Input({
-  name: 'range',
-  message: 'range (countries, zones or cities) >'
-});
-var sp = new Input({
-  name: 'specific',
-  message: 'more precisely >'
-});
-
-
 
 commands = { "create": function(rest) {
     return new Promise((resolve, reject) => {
@@ -90,6 +70,18 @@ commands = { "create": function(rest) {
             database.DeleteAllData();
         resolve(null);
     });
+},
+"create-missing": function(rest) {
+    return new Promise((resolve, reject) => {
+        database.GetAllUngot();
+        resolve(null);
+    });
+},
+"delay": function(rest) {
+    return new Promise((resolve, reject) => {
+        delayer.setTimer(rest[0]);
+        resolve(null);
+    });
 }
 };
 
@@ -124,4 +116,5 @@ shell = function() {
       });
 }
 
+exports.decode = decode;
 exports.shell = shell;

@@ -18,12 +18,62 @@ function openTab(tabName) {
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tabName).style.display = "block";
 //  evt.currentTarget.className += " active";
+  if (tabName == "Option") checkCorrectOne();
+}
+
+function checkCorrectOne() {
+    let getter = browser.storage.local.get("optionDir");
+    getter.then(function(it) {
+        if (it.optionDir) {
+            document.getElementById(it.optionDir).checked = true;
+        }
+        let yoyo = browser.storage.local.get("visible");
+        yoyo.then(function(it) {
+            document.getElementById("visible").checked = it.visible;
+            let daaaaate = browser.storage.local.get("visible");
+            daaaaate.then(function(it) {
+                document.getElementById("date").value = it.date;
+            }, function(err) {
+                console.log(err);
+            })
+        }, function(err) {
+            console.log(err);
+        });
+    }, function(err) {
+        console.log(err);
+    });
+}
+
+function whoIsChecked() {
+    if (document.getElementById('bot').checked)
+        return 'bot';
+    if (document.getElementById('top').checked)
+        return 'top';
+    if (document.getElementById('left').checked)
+        return 'left';
+    if (document.getElementById('right').checked)
+        return 'right';
+}
+
+function sendToAlltabs(message) {
+    var gettingActiveTab = browser.tabs.query({currentWindow: true});
+    gettingActiveTab.then((tabs) => {
+        for (let tab of tabs) {
+            browser.tabs.sendMessage(tab.id, message);
+        }
+    });
+    var gettingActiveTab2 = browser.tabs.query({active : true, currentWindow: true});
+    gettingActiveTab2.then((tabs) => {
+        for (let tab of tabs) {
+            browser.tabs.sendMessage(tab.id, message);
+        }
+    });
 }
 
 browser.tabs.executeScript(null, { file: "/content_scripts/getData.js" });
 
 document.addEventListener("click", (e) => {
-  console.log("click");
+  whoIsChecked();
   if (e.target.classList.contains("tabZone")) {
     var gettingActiveTab = browser.tabs.query({active: true, currentWindow: true});
     openTab(e.target.textContent);
@@ -35,14 +85,16 @@ document.addEventListener("click", (e) => {
     if (f && v) {
         console.log(f);
         console.log(v);
-        var gettingActiveTab = browser.tabs.query({active: true, currentWindow: true});
-        gettingActiveTab.then((tabs) => {
-          browser.tabs.sendMessage(tabs[0].id, {field: f, value : v});
-        });
+        sendToAlltabs({type : "NewData", field: f, value : v});
     }
   } else if (e.target.classList.contains("clear")) {
     browser.tabs.reload();
     window.close();
+  }else if (e.target.classList.contains("save")) {
+      console.log(whoIsChecked());
+      console.log(document.getElementById('visible').checked);
+      console.log(document.getElementById('date').value);
+      sendToAlltabs({type : "Option", dir: whoIsChecked(), visible: document.getElementById('visible').checked, date:document.getElementById('date').value});
   } else {
       /*
       console.log(e.target.id);

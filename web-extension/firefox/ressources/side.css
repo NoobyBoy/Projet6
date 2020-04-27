@@ -1,0 +1,24 @@
+.banner {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: auto; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: blue; /* Black */
+    padding-top: 20px;
+}
+
+.banner h2 {
+    top : 0;
+    color: red;
+}
+
+.texttop {
+    padding-top: 10px;
+}
+
+p {
+    text-align: center;
+    padding-top: 50%;
+}

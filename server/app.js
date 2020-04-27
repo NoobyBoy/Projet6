@@ -10,10 +10,12 @@ const graph = require('./src/graph')
 var app = express();
 
 var death;
+setTimeout(() => {
+    graph.getDeath()
+    .then(r => death = r)
+    .catch(r => death = r);
+}, 750);
 
-graph.getDeath()
-.then(r => death = r)
-.catch(r => death = r);
 
 function toUpper(str) {
 return str
@@ -43,6 +45,9 @@ app.get('/data/all', function(req, res) {
     if (req.body.date) {
         date = req.body.date;
     }
+    if (req.query.date) {
+        date = req.query.date;
+    }
     database.GetData(date)
     .then(data => {
         if (data) {
@@ -64,6 +69,9 @@ app.get('/data/countries', function(req, res) {
     if (req.body.date) {
         date = req.body.date;
     }
+    if (req.query.date) {
+        date = req.query.date;
+    }
     database.GetData(date)
     .then(data => {
         if (data.country) {
@@ -79,6 +87,9 @@ app.get('/data/countries/:country', function(req, res) {
     var date = null
     if (req.body.date) {
         date = req.body.date;
+    }
+    if (req.query.date) {
+        date = req.query.date;
     }
     if (req.params.country) {
         country = toUpper(req.params.country)
@@ -104,6 +115,9 @@ app.get('/data/zones', function(req, res) {
     if (req.body.date) {
         date = req.body.date;
     }
+    if (req.query.date) {
+        date = req.query.date;
+    }
     database.GetData(date)
     .then(data => {
         if (data.zone) {
@@ -119,6 +133,9 @@ app.get('/data/zones/:zone', function(req, res) {
     var date = null
     if (req.body.date) {
         date = req.body.date;
+    }
+    if (req.query.date) {
+        date = req.query.date;
     }
     if (req.params.zone) {
         zone = toUpper(req.params.zone)
@@ -143,6 +160,9 @@ app.get('/data/cities', function(req, res) {
     if (req.body.date) {
         date = req.body.date;
     }
+    if (req.query.date) {
+        date = req.query.date;
+    }
     database.GetData(date)
     .then(data => {
         if (data.city) {
@@ -158,6 +178,9 @@ app.get('/data/cities/:city', function(req, res) {
     var date = null
     if (req.body.date) {
         date = req.body.date;
+    }
+    if (req.query.date) {
+        date = req.query.date;
     }
     if (req.params.city) {
         city = toUpper(req.params.city)
@@ -182,6 +205,9 @@ app.get('/data/list/countries', function(req, res) {
     if (req.body.date) {
         date = req.body.date;
     }
+    if (req.query.date) {
+        date = req.query.date;
+    }
     database.GetData(date)
     .then(data => {
         if (data.country) {
@@ -198,6 +224,9 @@ app.get('/data/list/zones', function(req, res) {
     if (req.body.date) {
         date = req.body.date;
     }
+    if (req.query.date) {
+        date = req.query.date;
+    }
     database.GetData(date)
     .then(data => {
         if (data.zone) {
@@ -213,6 +242,9 @@ app.get('/data/list/cities', function(req, res) {
     var date = null
     if (req.body.date) {
         date = req.body.date;
+    }
+    if (req.query.date) {
+        date = req.query.date;
     }
     database.GetData(date)
     .then(data => {

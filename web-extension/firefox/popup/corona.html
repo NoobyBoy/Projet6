@@ -12,6 +12,7 @@
          <div class="tabZone">Country</div>
          <div class="tabZone">Region / State</div>
          <div class="tabZone">City</div>
+         <div class="tabZone">Option</div>
      </div>
 
      <!-- Tab content -->
@@ -38,7 +39,26 @@
          </div>
          <input type="button" value="Search" class="validate" id="cities">
      </div>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+     <div id="Option" class="tabcontent">
+         <h3>Option</h3>
+         <center>
+         <div class="complete" style="width:300px;">
+             <input type="radio" id="bot" name="dir" value="bottom"> <label for="bot">Bottom</label>
+             <input type="radio" id="top" name="dir" value="top"> <label for="top">Top</label>
+             <input type="radio" id="left" name="dir" value="left"> <label for="left">Left</label>
+             <input type="radio" id="right" name="dir" value="right"> <label for="right">right</label>
+         </div>
+         <div class="pouet">
+             <input type="checkbox" id="visible" name="visible" value="visible" checked> <label for "visible">Visible</label>
+         </div>
+         <div class="pouet">
+             date of the data :
+             <input type="date" id="date" name="data-date" min="2020-01-22">
+         </div>
+         <input type="button" value="Save" class="save" id="save">
+        </center>
+     </div>
+
      <script src="corona.js"></script>
 
   </body>
