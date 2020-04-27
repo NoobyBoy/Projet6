@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginTop="10dp" android:layout_marginBottom="10dp">
+
+    <TextView
+        android:id="@+id/confirmedListNb"
+        android:textColor="@color/red"
+        android:text="lol"
+        android:textSize="26dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"/>
+
+    <TextView
+        android:id="@+id/confirmedListName"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/confirmedListNb"
+        android:text="lol"
+        android:textColor="@color/lightGrey"
+        android:textSize="26dp" />
+
+</RelativeLayout>

@@ -20,6 +20,7 @@ class APICall {
     }
 
     private fun sendRequest(urlToAdd : String) : Request {
+        println("requestt : " + url + urlToAdd)
         return Request.Builder()
             .url(url + urlToAdd)
             .build()

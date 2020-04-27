@@ -5,13 +5,20 @@
         </v-content>
         <v-content v-else>
             <Menu/>
-            <TotalCase totalCase="400000"/>
+            <TotalCase
+                    v-bind:countries-data="countriesData"
+                    v-bind:states-data="statesData"
+                    v-bind:cities-data="citiesData"
+                    v-bind:country="countrySelected"
+                    v-bind:state="stateSelected"
+                    v-bind:city="citySelected"
+                    :key="citySelected || stateSelected || countrySelected"/>
             <CaseList
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"
             @Selection-sent="getSelection"/>
-           <TotalDeath
+           <!--<TotalDeath
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"/>
@@ -19,18 +26,18 @@
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"/>
-            <LastUpdate   :method="GetDayDate"/>
+            <LastUpdate   :method="GetDayDate"/>-->
         </v-content>
     </v-app>
 </template>
 
 <script>
   import Menu from './components/Menu.vue'
-  import TotalCase from './components/TotalCase.vue'
+  import TotalCase from './components/totalCase/TotalCase.vue'
   import CaseList from './components/caseList/CaseList.vue'
-  import LastUpdate from './components/LastUpdate.vue'
-  import TotalDeath from './components/totalDeath/TotalDeath.vue'
-  import TotalReco from './components/totalReco/TotalRecover.vue'
+  //import LastUpdate from './components/LastUpdate.vue'
+  //import TotalDeath from './components/totalDeath/TotalDeath.vue'
+  //import TotalReco from './components/totalReco/TotalRecover.vue'
   import APIData from './services/GetData'
 
   export default {
@@ -47,10 +54,10 @@
     components: {
       TotalCase,
       CaseList,
-      LastUpdate,
+      //LastUpdate,
       Menu,
-      TotalDeath,
-      TotalReco
+      //TotalDeath,
+      //TotalReco
     },
     methods : {
         async getData () {
@@ -87,9 +94,6 @@
             this.stateSelected = payload.state
             this.citySelected = payload.city
 
-            console.log(this.countrySelected)
-            console.log(this.stateSelected)
-            console.log(this.citySelected)
         }
     },
 

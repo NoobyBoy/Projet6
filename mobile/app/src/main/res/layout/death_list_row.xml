@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginTop="10dp" android:layout_marginBottom="10dp">
+
+    <TextView
+        android:id="@+id/deathListNb"
+        android:textColor="@android:color/white"
+        android:textSize="24dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:id="@+id/deathList"
+        android:layout_marginTop="4dp"
+        android:layout_width="100dp"
+        android:layout_height="26dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/deathListNb"
+        android:text="deaths"
+        android:textColor="@color/lightGrey"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/deathListName"
+        android:layout_width="100dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/deathListNb"
+        android:text="deaths"
+        android:textColor="@color/lightGrey"
+        android:textSize="20dp"
+        android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>

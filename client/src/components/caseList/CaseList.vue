@@ -1,11 +1,11 @@
 <template>
-
-<v-container style="max-height: 500px; background: #42b983;">
+<v-flex xs12 md4>
+<v-container style="max-height: 500px; background: #808080;">
     <v-row justify="center" align="center">
         <v-subheader>{{caseTitle}}</v-subheader>
     </v-row>
     <v-container
-            style="max-height: 500px; background: aqua"
+            style="max-height: 500px; background: #808080"
             >
         <v-row justify="center" align="center" v-if="countryIsSelected || stateIsSelected || citiesIsSelected">
             <v-chip
@@ -70,7 +70,7 @@
     </v-container>
     <selector @Admin-sent="getAdminFromSelector"/>
 </v-container>
-
+</v-flex>
 </template>
 
 
@@ -124,7 +124,6 @@
                 this.updateView()
             },
             updateView () {
-                console.log("\n\n-------------UPDATE VIEW-----------\n\n")
                 this.noData = false
                 if (this.adminState === Admin.Admin0) { // ADMIN 0
 
