@@ -1,8 +1,8 @@
 <template>
-<v-flex xs12 md4>
-<v-container style="max-height: 100px; background: dimgrey">
+<v-flex xs12 md3>
+<v-container style="max-height: 200px; background: dimgrey">
     <v-row justify="center" align="center">
-        <v-subheader>Total Confirmed</v-subheader>
+        <v-subheader class="display-3">Total Confirmed</v-subheader>
     </v-row>
     <v-row justify="center" align="center">
         <v-subheader style="font-size: xx-large; color: red" >{{nbConfirmed}}</v-subheader>
