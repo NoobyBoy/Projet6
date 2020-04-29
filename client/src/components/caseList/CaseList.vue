@@ -2,7 +2,7 @@
 <v-flex xs12 md3>
 <v-container style="max-height: 600px; background: #808080">
     <v-row justify="center" align="center">
-        <v-subheader class="display-1">{{caseTitle}}</v-subheader>
+        <v-subheader>{{caseTitle}}</v-subheader>
     </v-row>
     <v-container
             style="max-height: 500px; background: #808080;"

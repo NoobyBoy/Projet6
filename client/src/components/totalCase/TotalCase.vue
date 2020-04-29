@@ -2,10 +2,10 @@
 <v-flex xs12 md3>
 <v-container style="max-height: 200px; background: dimgrey">
     <v-row justify="center" align="center">
-        <v-subheader class="display-3">Total Confirmed</v-subheader>
+        <v-subheader class="display-1">Total Confirmed</v-subheader>
     </v-row>
     <v-row justify="center" align="center">
-        <v-subheader style="font-size: xx-large; color: red" >{{nbConfirmed}}</v-subheader>
+        <v-subheader class="display-3" style="font-size: xx-large; color: red" >{{nbConfirmed}}</v-subheader>
     </v-row>
 </v-container>
 </v-flex>
@@ -36,16 +36,6 @@ export default {
         nbConfirmed : 0,
     }),
     created() {
-        console.log("\n\n\nTotalCase")
-        console.log("country : ")
-        console.log(this.country)
-        console.log(this.countriesData)
-        console.log("state :")
-        console.log(this.state)
-        console.log(this.statesData)
-        console.log("city :")
-        console.log(this.city)
-        console.log(this.citiesData)
 
         if (this.city != null) {
             for (let elem in this.citiesData) {
