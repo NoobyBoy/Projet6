@@ -10,6 +10,7 @@ class APICall {
     private val url = "http://10.0.2.2:8080/"
     private val client = OkHttpClient()
     private var data : JSONObject? = null
+    private var dataFor : JSONObject? = null
 
 
     companion object {
@@ -29,6 +30,10 @@ class APICall {
         return data
     }
 
+    fun getDataFor() : JSONObject? {
+        return dataFor
+    }
+
     fun fetchData() {
         val request = Request.Builder()
             .url(url + "data/all")
@@ -41,6 +46,28 @@ class APICall {
                 } else {
                     val res = JSONObject(response.body()?.string()!!)
                     data = res.getJSONObject("data")
+                }
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Bad request : ")
+                println(e)
+            }
+        })
+    }
+
+    fun fetchFor(arg : String) {
+        val request = Request.Builder()
+            .url(url + "data/$arg")
+            .build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call : Call, response: Response) {
+                if (!response.isSuccessful()) {
+                    println("Request failed")
+                    return
+                } else {
+                    val res = JSONObject(response.body()?.string()!!)
+                    dataFor = res.getJSONObject("data")
                 }
             }
 
