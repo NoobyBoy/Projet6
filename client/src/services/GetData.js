@@ -10,13 +10,13 @@ export default {
     getCities () {
         return Api().get('/cities')
     },
-    getSpecificCountry(country) {
-        return Api().get('/countries/' + country)
+    getCountriesDate(date) {
+        return Api().get('/countries?date=' + date)
     },
-    getSpecificState(state) {
-        return Api().get('/zones/' + state)
+    getStatesDate(date) {
+        return Api().get('/zones?date=' + date)
     },
-    getSpecificCity(city) {
-        return Api().get('/cities/' + city)
+    getCitiesDate(date) {
+        return Api().get('/cities?date=' + date)
     },
 }
