@@ -1,7 +1,11 @@
 <template>
-    <v-container id="case">
+<v-flex xs12 md3>
+    <v-container style="max-height: 500px; background: #808080;">
+    <v-row justify="center" align="center">
         <Viewer v-bind:data-to-display="elemDisplayed"/>
+        </v-row>
     </v-container>
+</v-flex>
 </template>
 
 
@@ -43,12 +47,4 @@
 </script>
 
 <style scoped>
-    #case {
-        margin: 5px;
-        width: 350px;
-        height: 500px;
-        background: #212121;
-        color: #BDBDBD;
-        position:relative;
-    }
 </style>
