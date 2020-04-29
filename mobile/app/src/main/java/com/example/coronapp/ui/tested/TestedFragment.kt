@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.coronapp.R
-import com.example.coronapp.TabLayoutAdapter
+import com.example.coronapp.utils.TabLayoutAdapter
 import kotlinx.android.synthetic.main.fragment_tested.view.*
 
 class TestedFragment : Fragment() {

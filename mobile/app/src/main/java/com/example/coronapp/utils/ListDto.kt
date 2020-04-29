@@ -1,4 +1,4 @@
-package com.example.coronapp
+package com.example.coronapp.utils
 
 class ListDto {
     var country: String = ""

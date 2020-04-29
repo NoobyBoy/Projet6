@@ -6,34 +6,55 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.coronapp.R
+import com.example.coronapp.utils.APICall
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val http = APICall.instance
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.totalDeath)
         val date = getCurrentDateTime()
         val dateInString = date.toString("M/d/yyyy HH:mm:ss")
 
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        root.findViewById<TextView>(R.id.totalDeath).text = "0"
         root.findViewById<TextView>(R.id.lastUpdateDate).text = dateInString
         root.findViewById<TextView>(R.id.nbCountry).text = "185"
+        getTotalConfirmed(root)
         return root
+    }
+
+
+    private fun getTotalConfirmed(root : View?) {
+        var allData : JSONObject?
+        var it = 0;
+
+        do {
+            allData = http.getData()
+            it++
+        } while (allData == null || it < 1000)
+        var nb = "0"
+
+        if (allData == null)
+             root!!.findViewById<TextView>(R.id.totalDeath).text = "Unable to resolve data"
+        allData = allData.getJSONObject("countries")
+        val i: Iterator<String> = allData!!.keys()
+        while (i.hasNext()) {
+            val key = i.next()
+            val value = JSONObject(allData!!.get(key).toString())
+            if (key == "Total") {
+                nb = value.get("Confirmed").toString()
+            }
+        }
+        root!!.findViewById<TextView>(R.id.totalDeath).text = nb
     }
 
     private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {

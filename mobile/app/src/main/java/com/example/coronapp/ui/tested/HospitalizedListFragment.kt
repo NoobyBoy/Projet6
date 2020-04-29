@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.coronapp.ListDto
+import com.example.coronapp.utils.ListDto
 import com.example.coronapp.MainActivity
 import com.example.coronapp.R
+import com.example.coronapp.utils.APICall
+import org.json.JSONObject
 
 class HospitalizedListFragment : Fragment() {
     private var listView: ListView? = null;
+    private val http = APICall.instance
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_hospitalized_list, container, false)
@@ -30,12 +34,23 @@ class HospitalizedListFragment : Fragment() {
 
     private fun generateData(): ArrayList<ListDto> {
         var result = ArrayList<ListDto>()
+        var allData : JSONObject?
+        var it = 0;
 
-        for (i in 0..9) {
+        do {
+            allData = http.getData()
+            it++
+        } while (allData == null || it < 1000)
+
+        allData = allData?.getJSONObject("countries")
+        val i: Iterator<String> = allData!!.keys()
+        while (i.hasNext()) {
+            val key = i.next()
+            val value = JSONObject(allData!!.get(key).toString())
             var country = ListDto(
-                "Fr",
-                "France",
-                123456
+                value.get("Province_State").toString(),
+                key,
+                value.get("Confirmed").toString().toInt()
             )
             result.add(country)
         }

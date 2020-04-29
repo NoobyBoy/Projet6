@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.coronapp.R
-import com.example.coronapp.ListDto
+import com.example.coronapp.utils.ListDto
 
 class TestedListAdapter(private var activity: Activity, private var items: ArrayList<ListDto>, private var hospitalized: Boolean) : BaseAdapter() {
 
@@ -31,7 +31,7 @@ class TestedListAdapter(private var activity: Activity, private var items: Array
             val viewHolder: ViewHolder
 
             if (convertView == null) {
-                var inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                var inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                 view = inflater.inflate(R.layout.tested_list_row, null)
                 viewHolder =
                     ViewHolder(
