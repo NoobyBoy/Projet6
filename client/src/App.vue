@@ -5,6 +5,7 @@
         </v-content>
         <v-content v-else>
             <Menu/>
+            
             <TotalCase
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
@@ -13,12 +14,16 @@
                     v-bind:state="stateSelected"
                     v-bind:city="citySelected"
                     :key="citySelected || stateSelected || countrySelected"/>
+                    <v-layout row>
             <CaseList
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"
             @Selection-sent="getSelection"/>
-           <!--<TotalDeath
+            <v-flex xs12 md3>
+              
+            </v-flex>
+           <TotalDeath
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"/>
@@ -26,7 +31,9 @@
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
                     v-bind:cities-data="citiesData"/>
-            <LastUpdate   :method="GetDayDate"/>-->
+            </v-layout>
+            <LastUpdate   :method="GetDayDate"/>
+            
         </v-content>
     </v-app>
 </template>
@@ -35,9 +42,9 @@
   import Menu from './components/Menu.vue'
   import TotalCase from './components/totalCase/TotalCase.vue'
   import CaseList from './components/caseList/CaseList.vue'
-  //import LastUpdate from './components/LastUpdate.vue'
-  //import TotalDeath from './components/totalDeath/TotalDeath.vue'
-  //import TotalReco from './components/totalReco/TotalRecover.vue'
+  import LastUpdate from './components/LastUpdate.vue'
+  import TotalDeath from './components/totalDeath/TotalDeath.vue'
+  import TotalReco from './components/totalReco/TotalRecover.vue'
   import APIData from './services/GetData'
 
   export default {
@@ -54,10 +61,10 @@
     components: {
       TotalCase,
       CaseList,
-      //LastUpdate,
+      LastUpdate,
       Menu,
-      //TotalDeath,
-      //TotalReco
+      TotalDeath,
+      TotalReco
     },
     methods : {
         async getData () {

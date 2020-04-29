@@ -1,11 +1,11 @@
 <template>
-<v-flex xs12 md4>
-<v-container style="max-height: 500px; background: #808080;">
+<v-flex xs12 md3>
+<v-container style="max-height: 600px; background: #808080">
     <v-row justify="center" align="center">
-        <v-subheader>{{caseTitle}}</v-subheader>
+        <v-subheader class="display-1">{{caseTitle}}</v-subheader>
     </v-row>
     <v-container
-            style="max-height: 500px; background: #808080"
+            style="max-height: 500px; background: #808080;"
             >
         <v-row justify="center" align="center" v-if="countryIsSelected || stateIsSelected || citiesIsSelected">
             <v-chip
@@ -32,12 +32,12 @@
 
         </v-row>
         <v-container class="overflow-y-auto"
-        style="max-height: 300px">
+        style="max-height: 400px;">
             <v-row
                     align="center"
                     justify="center">
                 <v-card class="mx-auto"
-                        style="background: brown;">
+                        style="background: #808080;">
                     <v-list>
                         <v-list-item-group>
                             <v-list-item
