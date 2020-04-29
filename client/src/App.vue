@@ -105,7 +105,7 @@
         },
         GetDayDate : function () {
             var date = new Date()
-            var text = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
+            var text = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
             console.log(text)
             return text;
         },
