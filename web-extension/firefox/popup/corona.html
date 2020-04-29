@@ -42,19 +42,30 @@
      <div id="Option" class="tabcontent">
          <h3>Option</h3>
          <center>
+             -------------------------------
+             <div class="complete" style="width:300px;">
+                 Display mode : </br>
+                 <input type="radio" id="number" name="mode" value="number"> <label for="bot">number</label>
+                 <input type="radio" id="graph" name="mode" value="graph"> <label for="top">graph</label>
+             </div>
+             -------------------------------
          <div class="complete" style="width:300px;">
+             Display emplacement : </br>
              <input type="radio" id="bot" name="dir" value="bottom"> <label for="bot">Bottom</label>
              <input type="radio" id="top" name="dir" value="top"> <label for="top">Top</label>
              <input type="radio" id="left" name="dir" value="left"> <label for="left">Left</label>
              <input type="radio" id="right" name="dir" value="right"> <label for="right">right</label>
          </div>
+         -------------------------------
          <div class="pouet">
              <input type="checkbox" id="visible" name="visible" value="visible" checked> <label for "visible">Visible</label>
          </div>
+         -------------------------------
          <div class="pouet">
              date of the data :
              <input type="date" id="date" name="data-date" min="2020-01-22">
          </div>
+         -------------------------------
          <input type="button" value="Save" class="save" id="save">
         </center>
      </div>

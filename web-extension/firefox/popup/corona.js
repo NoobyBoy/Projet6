@@ -30,9 +30,9 @@ function checkCorrectOne() {
         let yoyo = browser.storage.local.get("visible");
         yoyo.then(function(it) {
             document.getElementById("visible").checked = it.visible;
-            let daaaaate = browser.storage.local.get("visible");
+            let daaaaate = browser.storage.local.get("dataMode");
             daaaaate.then(function(it) {
-                document.getElementById("date").value = it.date;
+                document.getElementById(it.dataMode).checked = true;
             }, function(err) {
                 console.log(err);
             })
@@ -53,6 +53,12 @@ function whoIsChecked() {
         return 'left';
     if (document.getElementById('right').checked)
         return 'right';
+}
+function whoIsChecked2() {
+    if (document.getElementById('number').checked)
+        return 'number';
+    if (document.getElementById('graph').checked)
+        return 'graph';
 }
 
 function sendToAlltabs(message) {
@@ -92,9 +98,10 @@ document.addEventListener("click", (e) => {
     window.close();
   }else if (e.target.classList.contains("save")) {
       console.log(whoIsChecked());
+      console.log(whoIsChecked2());
       console.log(document.getElementById('visible').checked);
       console.log(document.getElementById('date').value);
-      sendToAlltabs({type : "Option", dir: whoIsChecked(), visible: document.getElementById('visible').checked, date:document.getElementById('date').value});
+      sendToAlltabs({type : "Option", dir: whoIsChecked(), visible: document.getElementById('visible').checked, date:document.getElementById('date').value, dataMode : whoIsChecked2()});
   } else {
       /*
       console.log(e.target.id);
