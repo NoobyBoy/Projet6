@@ -10,6 +10,11 @@ export default {
     getCities () {
         return Api().get('/cities')
     },
+    //Graph sans date
+    getGraphData() {
+        return Api().get('/countries/total')
+    },
+    //
     getCountriesDate(date) {
         return Api().get('/countries?date=' + date)
     },
@@ -18,5 +23,9 @@ export default {
     },
     getCitiesDate(date) {
         return Api().get('/cities?date=' + date)
+    },
+    //graph avec date
+    getGraphDataDate(date) {
+        return Api().get('/countries/total?date=' + date)
     },
 }
