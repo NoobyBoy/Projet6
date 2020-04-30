@@ -4,7 +4,8 @@
             <h1>Loading...</h1>
         </v-content>
         <v-content v-else>
-            <Menu @Current-date="getProjectDate"/>
+            <Menu @Current-date="getProjectDate"
+            v-bind:project-date="projectDate"/>
             <TotalCase
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"
@@ -20,7 +21,6 @@
                     v-bind:cities-data="citiesData"
             @Selection-sent="getSelection"/>
             <v-flex xs12 md3>
-
             </v-flex>
            <TotalDeath
                     v-bind:countries-data="countriesData"
@@ -32,7 +32,8 @@
                     v-bind:cities-data="citiesData"/>
             <LastUpdate   :method="GetDayDate"/>
             </v-layout>
-
+            <Graph
+              v-bind:graph-data="graphData"/>
         </v-content>
     </v-app>
 </template>
@@ -45,6 +46,8 @@
   import TotalDeath from './components/totalDeath/TotalDeath.vue'
   import TotalReco from './components/totalReco/TotalRecover.vue'
   import APIData from './services/GetData'
+  import Graph from './components/Graphic.vue'
+
 
   export default {
     name: 'App',
@@ -56,7 +59,8 @@
         countrySelected : null,
         stateSelected : null,
         citySelected : null,
-        projectDate : null
+        projectDate : null,
+        graphData : null
     }),
     components: {
       TotalCase,
@@ -64,13 +68,13 @@
       LastUpdate,
       Menu,
       TotalDeath,
-      TotalReco
+      TotalReco,
+      Graph
     },
     methods : {
         async getData (date) {
             try {
                 if (date == null) {
-                    console.log ("ACTUAL INFORMATION")
                     const countries = await APIData.getCountries();
                     this.countriesData = countries.data.data;
 
@@ -79,6 +83,9 @@
 
                     const cities = await APIData.getCities();
                     this.citiesData = cities.data.data;
+
+                    const graph = await APIData.getGraphData();
+                    this.graphData = graph.data.data;
                 } else {
                     console.log ("Day : " + date + " INFORMATION")
                     const countries = await APIData.getCountriesDate(date);
@@ -89,14 +96,11 @@
 
                     const cities = await APIData.getCitiesDate(date);
                     this.citiesData = cities.data.data;
+
+                    const graph = await APIData.getGraphDataDate(date);
+                    this.graphData = graph.data.data;
                 }
 
-                console.log("Countries data : ");
-                console.log(this.countriesData);
-                console.log("States data : ");
-                console.log(this.statesData);
-                console.log("Cities data : ");
-                console.log(this.citiesData);
                 this.loading = false
 
             } catch (err) {
@@ -122,8 +126,6 @@
     },
       watch : {
         projectDate () {
-            console.log("date change in app")
-            console.log(this.projectDate)
             this.loading = true
             this.getData(this.projectDate)
         }

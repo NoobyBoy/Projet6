@@ -141,7 +141,6 @@
 
                         for (let elem in this.statesData) {
                             if (this.statesData[elem].Country_Region === this.countrySelect) {
-                                //console.log(this.statesData[elem])
                                 this.dataToDisplay[i] = this.statesData[elem]
                                 i++
                             }
@@ -176,7 +175,6 @@
 
                         for (let elem in this.citiesData) {
                             if (this.citiesData[elem].Country_Region === this.countrySelect) {
-                                //console.log(this.statesData[elem])
                                 this.dataToDisplay[k] = this.citiesData[elem]
                                 k++
                             }
@@ -195,7 +193,6 @@
                 if (this.adminState === Admin.Admin0 && !this.countryIsSelected) {
                     this.countrySelect = tmp
                     this.countryIsSelected = true
-                    //console.log(this.itemSelected)
                 }
                 if (this.adminState === Admin.Admin1 && !this.stateIsSelected) {
                     this.stateSelect = tmp
@@ -206,18 +203,6 @@
                     this.citiesIsSelected = true
                 }
                 this.sendToApp()
-                //console.log(this.itemSelected)
-                /*if (this.adminState === Admin.Admin0) {
-                    if (this.itemSelected === tmp) {
-                        this.countryIsSelected = false
-                        this.itemSelected = ''
-                    } else {
-                        this.countryIsSelected = true
-                        this.itemSelected = tmp
-                    }
-                }*/
-
-
             },
             removeChip (item) {
                 if (item === Admin.Admin0) {
