@@ -4,7 +4,8 @@
             <h1>Loading...</h1>
         </v-content>
         <v-content v-else>
-            <Menu @Current-date="getProjectDate"/>
+            <Menu @Current-date="getProjectDate"
+            v-bind:project-date="projectDate"/>
             <TotalCase
                     v-bind:countries-data="countriesData"
                     v-bind:states-data="statesData"

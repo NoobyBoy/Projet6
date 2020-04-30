@@ -35,13 +35,19 @@
 <script>
 export default {
   name: 'Menu',
-    data : () => ({
-      date: new Date().toISOString().substr(0, 10),
-      menu: false,
-    }),
+  data : () => ({
+    date: new Date().toISOString().substr(0, 10),
+    menu: false,
+  }),
+
+  props : {
+    projectDate : String
+  },
 
     computed: {
       computedDateFormatted () {
+        console.log("Project Date")
+        console.log(this.projectDate)
 
         return this.formatDate(this.date)
       },
@@ -68,5 +74,7 @@ export default {
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
       },
     },
+  created() {
   }
+}
 </script>

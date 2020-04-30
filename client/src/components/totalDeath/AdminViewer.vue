@@ -5,12 +5,10 @@
             <v-subheader>Total Death</v-subheader>
         </v-row>
         <v-container
-                id="scroll-target"
                 style="max-height: 450px"
                 class="overflow-y-auto"
         >
             <v-row
-                    v-scroll:#scroll-target="onScroll"
                     align="center"
                     justify="center"
                     style="height: 1000px"
