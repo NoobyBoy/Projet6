@@ -75,7 +75,6 @@
         async getData (date) {
             try {
                 if (date == null) {
-                    console.log ("ACTUAL INFORMATION")
                     const countries = await APIData.getCountries();
                     this.countriesData = countries.data.data;
 
@@ -102,14 +101,6 @@
                     this.graphData = graph.data.data;
                 }
 
-                console.log("Countries data : ");
-                console.log(this.countriesData);
-                console.log("States data : ");
-                console.log(this.statesData);
-                console.log("Cities data : ");
-                console.log(this.citiesData);
-                console.log("graph date : ");
-                console.log(this.graphData);
                 this.loading = false
 
             } catch (err) {
@@ -135,8 +126,6 @@
     },
       watch : {
         projectDate () {
-            console.log("date change in app")
-            console.log(this.projectDate)
             this.loading = true
             this.getData(this.projectDate)
         }

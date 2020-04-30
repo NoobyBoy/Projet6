@@ -52,8 +52,6 @@
             admin : String
         },
         created() {
-            console.log("data to display")
-            console.log(this.dataToDisplay)
         }
     }
 </script>

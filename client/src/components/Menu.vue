@@ -46,10 +46,11 @@ export default {
 
     computed: {
       computedDateFormatted () {
-        console.log("Project Date")
-        console.log(this.projectDate)
-
-        return this.formatDate(this.date)
+        if (this.projectDate != null) {
+          return this.formatDate(this.projectDate)
+        } else {
+          return this.formatDate(this.date)
+        }
       },
     },
 

@@ -45,11 +45,8 @@ export default {
                 }
             }
         } else if (this.state != null) {
-            console.log("search state")
-            console.log(this.statesData)
             for (let elem in this.statesData) {
                 if (this.statesData[elem].Province_State === this.state) {
-                    console.log("elem")
                     this.nbConfirmed = this.statesData[elem].Confirmed
                     break
                 }
