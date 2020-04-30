@@ -17,27 +17,16 @@
         android:label="@string/title_list"
         tools:layout="@layout/fragment_death_list" />
 
-    <!--fragment
-        android:id="@+id/navigation_map"
-        android:name="com.example.coronapp.ui.map.MapFragment"
-        android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" /-->
 
     <fragment
         android:id="@+id/navigation_chart"
-        android:name="com.example.coronapp.ui.chart.FragmentChart"
+        android:name="com.example.coronapp.ui.chart.FragmentTab"
         android:label="@string/title_chart"
-        tools:layout="@layout/fragment_chart" />
+        tools:layout="@layout/fragment_chart_tab" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.coronapp.ui.deathList.DeathListFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_death_list" />
-
-    <fragment
-        android:id="@+id/navigation_tested"
-        android:name="com.example.coronapp.ui.tested.TestedFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_tested" />
 </navigation>

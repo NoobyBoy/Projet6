@@ -12,6 +12,7 @@
     <string name="lastUpdate">Last Updated at (M/D/YYYY)</string>
     <string name="nbCountryTxt">countries/regions</string>
     <string name="credit">Original project lead by JHU CSSE. Automation Support: Esri Living Atlas team and JHU APL. Contact them.</string>
+    <string name="date">Selected Date :</string>
 
     <string name="confirmed1">Confirmed Cases by Country/Region/Sovereignty</string>
     <string name="confirmed2">Confirmed Cases by Province/State/Dependency</string>

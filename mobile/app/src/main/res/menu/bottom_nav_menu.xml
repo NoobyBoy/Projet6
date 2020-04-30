@@ -11,11 +11,6 @@
         android:icon="@drawable/ic_list_black"
         android:title="@string/title_list" />
 
-    <!--item
-        android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_map_black"
-        android:title="@string/title_map" /-->
-
     <item
         android:id="@+id/navigation_chart"
         android:icon="@drawable/ic_map_black"
@@ -25,10 +20,5 @@
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_death"
         android:title="@string/title_dashboard" />
-
-    <item
-        android:id="@+id/navigation_tested"
-        android:icon="@drawable/ic_hospital"
-        android:title="@string/title_tested" />
 
 </menu>

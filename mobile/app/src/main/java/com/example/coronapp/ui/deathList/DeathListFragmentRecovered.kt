@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.coronapp.MainActivity
 import com.example.coronapp.R
 import com.example.coronapp.utils.APICall
@@ -59,17 +60,18 @@ class DeathListFragmentRecovered : Fragment() {
 
         do {
             allData = http.getData()
-            it++
-        } while (allData == null || it < 1000)
-        var nb = "0"
+        } while (allData == null && it < 1000)
 
-        if (allData == null)
+        if (allData == null) {
             root!!.findViewById<TextView>(R.id.totalDeathNb).text = "Unable to resolve data"
-        allData = allData.getJSONObject("countries")
-        val i: Iterator<String> = allData!!.keys()
+            return
+        }
+        var nb = "0"
+        allData = allData?.getJSONObject("countries")
+        val i: Iterator<String> = allData.keys()
         while (i.hasNext()) {
             val key = i.next()
-            val value = JSONObject(allData!!.get(key).toString())
+            val value = JSONObject(allData.get(key).toString())
             if (key == "Total") {
                 nb = value.get("Recovered").toString()
             }

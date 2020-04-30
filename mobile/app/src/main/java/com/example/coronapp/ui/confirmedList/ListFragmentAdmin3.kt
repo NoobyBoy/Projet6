@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.coronapp.MainActivity
 import com.example.coronapp.R
 import com.example.coronapp.utils.APICall
@@ -35,13 +36,16 @@ class ListFragmentAdmin3 : Fragment() {
         do {
             allData = http.getData()
             it++
-        } while (allData == null || it < 1000)
+        } while (allData == null && it < 1000)
+
+        if (allData == null)
+            return result
 
         allData = allData?.getJSONObject("cities")
         val i: Iterator<String> = allData!!.keys()
         while (i.hasNext()) {
             val key = i.next()
-            val value = JSONObject(allData!!.get(key).toString())
+            val value = JSONObject(allData.get(key).toString())
             var country = ListDto(
                 value.get("Country_Region").toString(),
                 key,
