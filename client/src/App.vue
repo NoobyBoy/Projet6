@@ -20,7 +20,6 @@
                     v-bind:cities-data="citiesData"
             @Selection-sent="getSelection"/>
             <v-flex xs12 md3>
-
             </v-flex>
            <TotalDeath
                     v-bind:countries-data="countriesData"
@@ -32,7 +31,8 @@
                     v-bind:cities-data="citiesData"/>
             <LastUpdate   :method="GetDayDate"/>
             </v-layout>
-
+            <Graph
+              v-bind:graph-data="graphData"/>
         </v-content>
     </v-app>
 </template>
@@ -45,6 +45,8 @@
   import TotalDeath from './components/totalDeath/TotalDeath.vue'
   import TotalReco from './components/totalReco/TotalRecover.vue'
   import APIData from './services/GetData'
+  import Graph from './components/Graphic.vue'
+
 
   export default {
     name: 'App',
@@ -56,7 +58,8 @@
         countrySelected : null,
         stateSelected : null,
         citySelected : null,
-        projectDate : null
+        projectDate : null,
+        graphData : null
     }),
     components: {
       TotalCase,
@@ -64,7 +67,8 @@
       LastUpdate,
       Menu,
       TotalDeath,
-      TotalReco
+      TotalReco,
+      Graph
     },
     methods : {
         async getData (date) {
@@ -79,6 +83,9 @@
 
                     const cities = await APIData.getCities();
                     this.citiesData = cities.data.data;
+
+                    const graph = await APIData.getGraphData();
+                    this.graphData = graph.data.data;
                 } else {
                     console.log ("Day : " + date + " INFORMATION")
                     const countries = await APIData.getCountriesDate(date);
@@ -89,6 +96,9 @@
 
                     const cities = await APIData.getCitiesDate(date);
                     this.citiesData = cities.data.data;
+
+                    const graph = await APIData.getGraphDataDate(date);
+                    this.graphData = graph.data.data;
                 }
 
                 console.log("Countries data : ");
@@ -97,6 +107,8 @@
                 console.log(this.statesData);
                 console.log("Cities data : ");
                 console.log(this.citiesData);
+                console.log("graph date : ");
+                console.log(this.graphData);
                 this.loading = false
 
             } catch (err) {
